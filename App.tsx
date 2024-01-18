@@ -24,6 +24,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import Main from './src/navigations/main';
+import Home from './src/screens/home';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -63,35 +65,12 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={{...backgroundStyle, flex: 1}}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}> W WApp.tsx</Text> to change
-            this WW screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <Main />
     </SafeAreaView>
   );
 }
@@ -112,8 +91,8 @@ const styles = StyleSheet.create({
   },
   highlight: {
     color: '#464F54',
-    fontWeight:"700",
-    fontFamily: 'Raleway-light',
+    fontWeight: '700',
+    fontFamily: 'Raleway',
   },
 });
 
