@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import colors from '../constants/colors';
 import {ScaledSheet} from 'react-native-size-matters';
 import ScheduleCard from '../components/schedulecard';
@@ -11,18 +11,62 @@ import {
 
 import TruckIcon from '../components/icons/truckIcon';
 import CustomHeader from '../components/customheader';
+import CustomPicker from '../components/custompicker';
+import CustomInput from '../components/custominput';
+import SpacingY from '../components/spacingy';
+import CustomDatePicker from '../components/customDatePicker';
+import CustomLocation from '../components/customlocation';
+import CheckBox from '@react-native-community/checkbox';
 
 interface props {
   navigation: NavigationProp<ParamListBase>;
 }
 
 const ScheduleForm1: React.FC<props> = ({navigation}) => {
+  const [toggleCheckBox, setToggleCheckBox] = React.useState<boolean>(false);
   return (
     <View style={styles.container}>
-      <CustomHeader navigation={navigation} showIcon={false} showNav={true} title="Schedule Pickup" />
-      <View style={styles.spacingTop}></View>
+      <CustomHeader
+        navigation={navigation}
+        showIcon={false}
+        showNav={true}
+        title="Schedule Pickup"
+      />
       <View style={styles.wrapper}>
-      
+        <ScrollView style={{flex: 1}}>
+          <View style={styles.spacingTop}></View>
+          <CustomPicker />
+          <SpacingY height={40} />
+          <CustomInput
+            title="Waste Quantity"
+            placeholder="Enter your waste quantities"
+          />
+          <SpacingY height={40} />
+          <CustomDatePicker
+            title="Schedule Date"
+            placeholder="Enter your preffered schedule date"
+          />
+          <SpacingY height={40} />
+          <CustomLocation
+            title="Pickup Location"
+            placeholder="Enter your pickup location"
+          />
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <CheckBox
+              disabled={false}
+              value={toggleCheckBox}
+              onValueChange={newValue => setToggleCheckBox(newValue)}
+            />
+            <Text style={styles.text}>Use my current address</Text>
+          </View>
+          <SpacingY height={57} />
+          <View>
+            <Text style={[styles.text, {fontStyle: 'italic',textAlign:"center"}]}>
+              We’ve added a 10% fee to your waste schedules for {"\n"}your
+              convenience.
+            </Text>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -36,6 +80,13 @@ const styles = ScaledSheet.create({
   },
   wrapper: {
     paddingHorizontal: '23@msr',
+    flex: 1,
+  },
+  text: {
+    fontWeight: '500',
+    fontFamily: 'Raleway',
+    color: colors.neutral[150],
+    fontSize: '12@s',
   },
   spacingX: {
     height: '10@vs',
