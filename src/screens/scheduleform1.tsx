@@ -17,6 +17,8 @@ import SpacingY from '../components/spacingy';
 import CustomDatePicker from '../components/customDatePicker';
 import CustomLocation from '../components/customlocation';
 import CheckBox from '@react-native-community/checkbox';
+import CustomBtn from '../components/customBtn';
+import {categoryTypes} from '../constants/mockData';
 
 interface props {
   navigation: NavigationProp<ParamListBase>;
@@ -24,6 +26,10 @@ interface props {
 
 const ScheduleForm1: React.FC<props> = ({navigation}) => {
   const [toggleCheckBox, setToggleCheckBox] = React.useState<boolean>(false);
+  const [selected, setSelected] = React.useState<categoryTypes[]>([]);
+  const onChangeCategory = (items: categoryTypes[]) => {
+    setSelected(items);
+  };
   return (
     <View style={styles.container}>
       <CustomHeader
@@ -35,7 +41,7 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
       <View style={styles.wrapper}>
         <ScrollView style={{flex: 1}}>
           <View style={styles.spacingTop}></View>
-          <CustomPicker />
+          <CustomPicker onChange={onChangeCategory} navigation={navigation} />
           <SpacingY height={40} />
           <CustomInput
             title="Waste Quantity"
@@ -61,10 +67,13 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
           </View>
           <SpacingY height={57} />
           <View>
-            <Text style={[styles.text, {fontStyle: 'italic',textAlign:"center"}]}>
-              We’ve added a 10% fee to your waste schedules for {"\n"}your
+            <Text
+              style={[styles.text, {fontStyle: 'italic', textAlign: 'center'}]}>
+              We’ve added a 10% fee to your waste schedules for {'\n'}your
               convenience.
             </Text>
+            <SpacingY height={16} />
+            <CustomBtn disabled={true} title="Continue" />
           </View>
         </ScrollView>
       </View>
