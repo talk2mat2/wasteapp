@@ -21,7 +21,7 @@ import {
   ParamListBase,
   useNavigation,
 } from '@react-navigation/native';
-import {categoryTypes, wasteCategory} from '../constants/mockData';
+import {categoryTypes, wasteCategory} from '../constants/mockDatas';
 import SpacingY from './spacingy';
 import CustomBtn from './customBtn';
 
@@ -29,7 +29,7 @@ interface props {
   navigation: NavigationProp<ParamListBase>;
   selected: categoryTypes[];
   addSelected: (item: categoryTypes) => void;
-  onChange:(item:categoryTypes[])=>void
+  onChange: (item: categoryTypes[]) => void;
 }
 
 const WasteSelector: React.FC<props> = ({
@@ -95,9 +95,10 @@ const WasteSelector: React.FC<props> = ({
             alignItems: 'center',
           },
         ]}>
-        <ScrollView style={{paddingRight:30}} horizontal>
-          {selected?.map((item,index) => (
-            <Chip key={index}
+        <ScrollView style={{paddingRight: 30}} horizontal>
+          {selected?.map((item, index) => (
+            <Chip
+              key={index}
               onClose={() => {
                 removeItem(item);
               }}
@@ -112,8 +113,7 @@ const WasteSelector: React.FC<props> = ({
                 height: 30,
                 backgroundColor: colors.neutral[250],
                 marginHorizontal: 3,
-              }}
-              onPress={() => console.log('Pressed')}>
+              }}>
               {item.name}
             </Chip>
           ))}
@@ -184,7 +184,11 @@ const WasteSelector: React.FC<props> = ({
           styles.wrapper,
           {height: scale(50), marginTop: 'auto', marginBottom: scale(44)},
         ]}>
-        <CustomBtn onPress={()=>onChange(selected)} disabled={selected.length < 1} title="Continue" />
+        <CustomBtn
+          onPress={() => onChange(selected)}
+          disabled={selected.length < 1}
+          title="Continue"
+        />
       </View>
     </View>
   );

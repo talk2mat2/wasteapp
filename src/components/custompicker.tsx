@@ -12,7 +12,7 @@ import {
 } from '@react-navigation/native';
 import SpacingY from './spacingy';
 import WasteSelector from './wasteselector';
-import {categoryTypes} from '../constants/mockData';
+import {categoryTypes} from '../constants/mockDatas';
 
 type props = {
   navigation: NavigationProp<ParamListBase>;
