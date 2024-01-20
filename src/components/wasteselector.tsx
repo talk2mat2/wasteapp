@@ -96,8 +96,8 @@ const WasteSelector: React.FC<props> = ({
           },
         ]}>
         <ScrollView style={{paddingRight:30}} horizontal>
-          {selected?.map(item => (
-            <Chip
+          {selected?.map((item,index) => (
+            <Chip key={index}
               onClose={() => {
                 removeItem(item);
               }}

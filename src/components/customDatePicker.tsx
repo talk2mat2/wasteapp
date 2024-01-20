@@ -1,26 +1,84 @@
-import React from 'react';
-import {View, TextInput} from 'react-native';
+import React, {useState} from 'react';
+import {View, TextInput, Pressable} from 'react-native';
 import {ScaledSheet, scale} from 'react-native-size-matters';
 import colors from '../constants/colors';
 import {Text} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface props {
   placeholder?: string;
   title: string;
+  value: string;
+  onChangeDate: (txt: string) => void;
 }
+type AndroidMode = 'date' | 'time';
+type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 
-const CustomDatePicker: React.FC<props> = ({placeholder = '', title}) => {
+const CustomDatePicker: React.FC<props> = ({
+  placeholder = '',
+  title,
+  value,
+  onChangeDate,
+}) => {
+  const [date, setDate] = useState(new Date(Date.now()));
+  const [mode, setMode] = useState<AndroidMode | IOSMode>('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event: any, selectedDate: any) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+    let newDate = currentDate.toDateString();
+    onChangeDate(newDate);
+  };
+
+  const showMode = (
+    currentMode: React.SetStateAction<AndroidMode | IOSMode>,
+  ) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={{flex: 1}}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
-      <TextInput
-        placeholderTextColor={colors.neutral[150]}
-        style={[styles.input, styles.subtitle]}
-        placeholder={placeholder}
-      />
+    <View>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          // is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+      <Pressable style={{flex: 1}} onPress={showDatepicker}>
+        <View style={styles.container}>
+          <View style={{flex: 1}}>
+            <Text style={styles.title}>{title}</Text>
+          </View>
+
+          <Text
+            style={[
+              styles.input,
+              styles.subtitle,
+              {color: colors.neutral[150]},
+            ]}
+            // placeholder={placeholder}
+            // value={date.toLocaleString()}
+          >
+            {value || 'Enter your preffered schedule date'}
+            {/* {date.toDateString()} */}
+          </Text>
+        </View>
+      </Pressable>
     </View>
   );
 };

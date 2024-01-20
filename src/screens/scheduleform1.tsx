@@ -30,6 +30,9 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
   const onChangeCategory = (items: categoryTypes[]) => {
     setSelected(items);
   };
+  const [quantity,setQantity]= React.useState<string>("")
+  const [location,setLocation]= React.useState<string>("Gbagada Phase II, House K, Road 104")
+  const [ScheduleDate,setScheduleDate]= React.useState<string>("")
   return (
     <View style={styles.container}>
       <CustomHeader
@@ -43,13 +46,17 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
           <View style={styles.spacingTop}></View>
           <CustomPicker onChange={onChangeCategory} navigation={navigation} />
           <SpacingY height={40} />
-          <CustomInput
+          <CustomInput value={quantity} onChangeText={(txt)=>{
+           setQantity(txt)
+          }}
             title="Waste Quantity"
             placeholder="Enter your waste quantities"
           />
           <SpacingY height={40} />
           <CustomDatePicker
             title="Schedule Date"
+            value={ScheduleDate}
+            onChangeDate={(text:string)=>setScheduleDate(text)}
             placeholder="Enter your preffered schedule date"
           />
           <SpacingY height={40} />
