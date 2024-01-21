@@ -1,25 +1,25 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import {Pressable, StyleProp, Text} from 'react-native';
 import {ScaledSheet, scale} from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../constants/colors';
+import { ViewStyle } from 'react-native';
 
 type props = {
   disabled?: boolean;
   title: string;
   onPress?: () => void;
+  others?:StyleProp<ViewStyle>
 };
 
-const CustomBtn: React.FC<props> = ({disabled, title, onPress}) => {
+const CustomBtnLight: React.FC<props> = ({disabled, title, onPress,others}) => {
   return (
-    <Pressable style={{flex:1}} onPress={disabled ? null : onPress ? onPress : null}>
+    <Pressable
+      style={{flex: 1}}
+      onPress={disabled ? null : onPress ? onPress : null}>
       <LinearGradient
-        colors={
-          disabled
-            ? [colors.success[150], colors.success[150]]
-            : [colors.success[50], colors.success[100]]
-        }
-        style={styles.linearGradient}>
+        colors={[colors.brand[50], colors.brand[50]]}
+        style={[styles.linearGradient]}>
         <Text style={styles.buttonText}>{title}</Text>
       </LinearGradient>
     </Pressable>
@@ -35,6 +35,8 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '50@s',
+    borderColor: colors.brand[100],
+    borderWidth: 1,
   },
   buttonText: {
     fontSize: '16@s',
@@ -43,9 +45,10 @@ const styles = ScaledSheet.create({
 
     textAlign: 'center',
     // margin: 10,
-    color: '#ffffff',
+    color: colors.brand[100],
+   
     // backgroundColor: 'transparent',
   },
 });
 
-export default CustomBtn;
+export default CustomBtnLight;

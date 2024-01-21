@@ -88,6 +88,9 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
 
   function conformRequest() {
     setModalopen(false);
+    setTimeout(() => {
+      showModal();
+    }, 1000);
   }
 
   React.useEffect(() => {
@@ -98,8 +101,8 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <Portal>
-        <PaperModal visible={true} onDismiss={hideModal}>
-          <Submiting />
+        <PaperModal visible={visible} onDismiss={hideModal}>
+          <Submiting  navigation={navigation}  hideModal={hideModal} />
         </PaperModal>
       </Portal>
       <Modal
@@ -120,6 +123,7 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
               backgroundColor: colors.primary[100],
             }}>
             <Confirm
+            
               conformRequest={conformRequest}
               quantity={quantity}
               category={selected}

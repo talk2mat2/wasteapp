@@ -118,7 +118,7 @@ const Confirm: React.FC<props> = ({
           marginBottom: scale(52),
           padding: 3,
         }}>
-        <CustomBtn title="Confirm Request" />
+        <CustomBtn onPress={conformRequest} title="Confirm Request" />
       </View>
     </View>
   );

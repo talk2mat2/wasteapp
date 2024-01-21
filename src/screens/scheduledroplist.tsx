@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import colors from '../constants/colors';
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, scale} from 'react-native-size-matters';
 import ScheduleCard from '../components/schedulecard';
 import LocationIcon from '../components/icons/locatioIcon';
 import TruckIcon from '../components/icons/truckIcon';
@@ -11,35 +11,36 @@ import {
   ParamListBase,
   useNavigation,
 } from '@react-navigation/native';
+import DropItem from '../components/dropItem';
 
 interface props {
   navigation: NavigationProp<ParamListBase>;
 }
 
-const Schedule: React.FC<props> = ({navigation}) => {
+const ScheduleDropList: React.FC<props> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <CustomHeader
         navigation={navigation}
         showIcon={true}
         showNav={true}
-        title="Schedule Request"
+        title="Schedule Drop off"
       />
       <View style={styles.spacingTop}></View>
       <View style={styles.wrapper}>
-        <ScheduleCard
-          onPress={() => navigation.navigate('scheduleForm1')}
-          title="Schedule Pickup"
-          icon={<TruckIcon />}
-          subTitle="Request for waste pickup at a goal"
+        <View>
+          <Text style={styles.subtitle}>
+            Below are the nearest Drop off locations closest to you
+          </Text>
+        </View>
+        <View style={{marginTop: scale(11)}}>
+          <FlatList
+            data={[1, 2, 3, 4, 5]}
+     
+            renderItem={() => <DropItem />}
+            // keyExtractor={item => item.id}
           />
-        <View style={styles.spacingX}></View>
-        <ScheduleCard
-          onPress={() => navigation.navigate('scheduleDropOff')}
-          icon={<LocationIcon />}
-          title="Schedule Drop-off"
-          subTitle="Request for waste drop-off at a goal"
-        />
+        </View>
       </View>
     </View>
   );
@@ -51,6 +52,13 @@ const styles = ScaledSheet.create({
 
     backgroundColor: colors.primary[100],
   },
+  subtitle: {
+    fontWeight: '400',
+    fontFamily: 'Roboto',
+    color: colors.neutral[50],
+    fontSize: '14@s',
+    fontStyle: 'normal',
+  },
   wrapper: {
     paddingHorizontal: '23@msr',
   },
@@ -58,8 +66,8 @@ const styles = ScaledSheet.create({
     height: '10@vs',
   },
   spacingTop: {
-    height: '40@vs',
+    height: '13@vs',
   },
 });
 
-export default Schedule;
+export default ScheduleDropList;

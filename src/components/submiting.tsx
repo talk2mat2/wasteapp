@@ -1,31 +1,53 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import {ScaledSheet, scale} from 'react-native-size-matters';
 import colors from '../constants/colors';
 import CustomBtn from './customBtn';
 import {Text, ActivityIndicator} from 'react-native-paper';
 import SpacingY from './spacingy';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {NavigationProp, ParamListBase} from '@react-navigation/native';
 
+interface propsType {
+  hideModal(): void;
+  navigation: NavigationProp<ParamListBase>;
+}
 const Successfull = () => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container2}>
       <View style={{flex: 1}}>
-        <SpacingY height={20} />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            paddingHorizontal: scale(13),
+            marginTop: scale(17),
+          }}>
+          <Pressable style={{height: 30, width: 30}}>
+            <AntDesign
+              style={{marginLeft: 'auto', alignSelf: 'center'}}
+              name="close"
+              color={colors.brand[150]}
+              size={15}
+            />
+          </Pressable>
+        </View>
+        <SpacingY height={7} />
         <View>
           <Image
-            resizeMode="contain" 
-            style={{width: 150, height: 150,alignSelf:"center"}} 
+            resizeMode="contain"
+            style={{width: 120, height: 120, alignSelf: 'center'}}
             source={require('../../assets/verified.gif')}
           />
         </View>
-        <View style={{marginTop: 'auto', marginBottom: scale(17)}}>
+        <View style={{marginTop: 'auto', marginBottom: scale(20)}}>
           <View style={{marginBottom: scale(7)}}>
             <Text style={styles.txt}>Submitted Successfully !</Text>
           </View>
-          <View >
+          <View>
             <Text
               style={{
-                fontSize: scale(11),
+                fontSize: scale(13),
                 fontWeight: '400',
                 textAlign: 'center',
                 color: colors.neutral[200],
@@ -63,20 +85,39 @@ const LoadingData = () => {
   );
 };
 
-const Submiting = () => {
-  return <Successfull />;
+const Submiting = ({hideModal, navigation}: propsType) => {
+  const [mounted, setMounted] = React.useState(1);
+
+  const fakeApicall = () => {
+    setTimeout(() => {
+      setMounted(2);
+    }, 8000);
+    setTimeout(hideModal, 13000);
+    setTimeout(() => {
+      navigation.navigate('scheduleDetails');
+    }, 16000);
+  };
+
+  React.useEffect(() => {
+    fakeApicall();
+  }, []);
+  return mounted == 1 ? <LoadingData /> : <Successfull />;
 };
 const styles = ScaledSheet.create({
   container: {
-    height: '268@vs',
+    height: '258@vs',
     backgroundColor: colors.brand[50],
-    marginHorizontal: 20,
-    borderRadius: '10@s',
+    marginHorizontal: 25,
+    borderRadius: '15@s',
     paddingHorizontal: '52@s',
   },
-  img: {
-  
+  container2: {
+    height: '258@vs',
+    backgroundColor: colors.brand[50],
+    marginHorizontal: 25,
+    borderRadius: '15@s',
   },
+  img: {},
   txt: {
     fontWeight: '600',
     fontFamily: 'Raleway',
