@@ -30,6 +30,7 @@ const CustomInput: React.FC<props> = ({
       </View>
       <TextInput
         value={value}
+        keyboardType={numeric?"number-pad":"default"}
         onChangeText={onChanged}
         placeholderTextColor={colors.neutral[150]}
         style={[styles.input, styles.subtitle]}

@@ -20,7 +20,7 @@ const windowHeight = Dimensions.get('window').height;
 const Scanning: React.FC<{}> = ({}) => {
   return (
     <View style={styles.container}>
-      <View style={{marginTop: windowHeight / 3}}>
+      <View style={{marginTop: windowHeight / 2.6}}>
         <Text style={styles.subtitle}>Searching</Text>
         <SpacingY height={25}/>
         <View style={{alignItems: 'center'}}>
