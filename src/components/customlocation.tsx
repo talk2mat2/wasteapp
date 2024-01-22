@@ -1,22 +1,36 @@
 import React from 'react';
-import {View, TextInput} from 'react-native';
+import {View, TextInput, Pressable, Alert} from 'react-native';
 import {ScaledSheet, scale} from 'react-native-size-matters';
 import colors from '../constants/colors';
 import {Text} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import GetLocation from 'react-native-get-location';
+import {geocode_url} from '../constants/mockDatas';
 
 interface props {
   placeholder?: string;
   title: string;
+  value: string;
+  disabled:boolean
+  onChangeText: (text: string) => void;
 }
 
-const CustomLocation: React.FC<props> = ({placeholder = '', title}) => {
+const CustomLocation: React.FC<props> = ({
+  placeholder = '',
+  title,
+  value,
+  onChangeText,
+  disabled
+}) => {
   return (
     <View style={styles.container}>
       <View style={{flex: 1}}>
         <Text style={styles.title}>{title}</Text>
       </View>
       <TextInput
+        value={value}
+        editable={disabled}
+        onChangeText={onChangeText}
         placeholderTextColor={colors.neutral[150]}
         style={[styles.input, styles.subtitle]}
         placeholder={placeholder}

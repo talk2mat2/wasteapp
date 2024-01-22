@@ -32,9 +32,10 @@ const Schedule: React.FC<props> = ({navigation}) => {
           title="Schedule Pickup"
           icon={<TruckIcon />}
           subTitle="Request for waste pickup at a goal"
-        />
+          />
         <View style={styles.spacingX}></View>
         <ScheduleCard
+          onPress={() => navigation.navigate('scheduleDropOff')}
           icon={<LocationIcon />}
           title="Schedule Drop-off"
           subTitle="Request for waste drop-off at a goal"

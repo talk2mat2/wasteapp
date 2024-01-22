@@ -32,7 +32,6 @@ import CustomInput from '../components/custominput';
 import SpacingY from '../components/spacingy';
 import CustomDatePicker from '../components/customDatePicker';
 import CustomLocation from '../components/customlocation';
-import CheckBox from '@react-native-community/checkbox';
 import CustomBtn from '../components/customBtn';
 import {categoryTypes} from '../constants/mockDatas';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -40,12 +39,20 @@ import GetLocation from 'react-native-get-location';
 import {geocode_url} from '../constants/mockDatas';
 import Confirm from '../components/confirm';
 import Submiting from '../components/submiting';
+import DropItemForm from '../components/dropItemForm';
+import CheckBox from '@react-native-community/checkbox';
+import {
+  RoundedCheckbox,
+  PureRoundedCheckbox,
+} from 'react-native-rounded-checkbox';
+import SpacingX from '../components/spacingx';
+import ConfirmDrop from '../components/confirmdrop';
 
 interface props {
   navigation: NavigationProp<ParamListBase>;
 }
 
-const ScheduleForm1: React.FC<props> = ({navigation}) => {
+const DropOffForm: React.FC<props> = ({navigation}) => {
   const [toggleCheckBox, setToggleCheckBox] = React.useState<boolean>(false);
   const [selected, setSelected] = React.useState<categoryTypes[]>([]);
   const [modalOpen, setModalopen] = React.useState<boolean>(false);
@@ -56,35 +63,12 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
   const [quantity, setQantity] = React.useState<string>('');
   const [location, setLocation] = React.useState<string>('');
   const [ScheduleDate, setScheduleDate] = React.useState<string>('');
+  const [ScheduleTime, setScheduleTime] = React.useState<string>('');
   const [loading, setLoading] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
   const [submiting, setSubmiting] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-
-  function getMylocation() {
-    setLoading(true);
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 60000,
-    })
-      .then(async location => {
-        console.log(location);
-        const geurl = geocode_url(location.longitude, location.latitude);
-        // console.log(geurl);
-        const response = await fetch(geurl);
-        const mylocate = await response.json();
-        const locationString = mylocate?.['display_name'];
-        setLocation(locationString);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        Alert.alert('We cant get your location');
-        const {code, message} = error;
-        console.warn(code, message);
-      });
-  }
 
   function conformRequest() {
     setModalopen(false);
@@ -93,16 +77,11 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
     }, 1000);
   }
 
-  React.useEffect(() => {
-    if (toggleCheckBox) {
-      getMylocation();
-    }
-  }, [toggleCheckBox]);
   return (
     <View style={{flex: 1}}>
       <Portal>
         <PaperModal visible={visible} onDismiss={hideModal}>
-          <Submiting  navigation={navigation}  hideModal={hideModal} />
+          <Submiting isDrop={true} navigation={navigation} hideModal={hideModal} />
         </PaperModal>
       </Portal>
       <Modal
@@ -122,13 +101,12 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
               marginTop: 'auto',
               backgroundColor: colors.primary[100],
             }}>
-            <Confirm
-            
+            <ConfirmDrop
               conformRequest={conformRequest}
-              quantity={quantity}
+              quantity={'1-5kg'}
               category={selected}
               location={location}
-              ScheduleDate={ScheduleDate}
+              ScheduleDate={' Wed, Dec 07, 2021'}
             />
           </View>
         </View>
@@ -138,74 +116,109 @@ const ScheduleForm1: React.FC<props> = ({navigation}) => {
           navigation={navigation}
           showIcon={false}
           showNav={true}
-          title="Schedule Pickup"
+          title="Schedule Drop off"
         />
         <View style={styles.wrapper}>
+          <View>
+            <Text style={styles.subtitle}>Schedule Drop off to:</Text>
+          </View>
+          <SpacingY height={9} />
           <ScrollView style={{flex: 1}}>
-            <View style={styles.spacingTop}></View>
+            <DropItemForm />
+            <SpacingY height={9} />
             <CustomPicker onChange={onChangeCategory} navigation={navigation} />
-            <SpacingY height={40} />
+            <SpacingY height={9} />
+            <View>
+              <Text style={styles.subtitle}>Waste Quantity</Text>
+              <SpacingY height={6} />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <RoundedCheckbox
+                    checkedColor={colors.neutral[50]}
+                    outerStyle={{
+                      backgroundColor: colors.neutral[50],
+                      width: 20,
+                      height: 20,
+                    }}
+                    text=""
+                    innerStyle={{width: 13, height: 13}}
+                    onPress={checked => console.log('Checked: ', checked)}
+                  />
+                  <SpacingX width={8} />
+                  <Text style={styles.text}>1-5 bags</Text>
+                </View>
+                <SpacingX width={7} />
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <RoundedCheckbox
+                    checkedColor={colors.neutral[50]}
+                    outerStyle={{
+                      backgroundColor: colors.neutral[50],
+                      width: 20,
+                      height: 20,
+                    }}
+                    text=""
+                    innerStyle={{width: 13, height: 13}}
+                    onPress={checked => console.log('Checked: ', checked)}
+                  />
+                  <SpacingX width={8} />
+                  <Text style={styles.text}>1-5 bags</Text>
+                </View>
+                <SpacingX width={15} />
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <RoundedCheckbox
+                    checkedColor={colors.neutral[50]}
+                    outerStyle={{
+                      backgroundColor: colors.neutral[50],
+                      width: 20,
+                      height: 20,
+                    }}
+                    text=""
+                    innerStyle={{width: 13, height: 13}}
+                    onPress={checked => console.log('Checked: ', checked)}
+                  />
+                  <SpacingX width={8} />
+                  <Text style={styles.text}>1-5 bags</Text>
+                </View>
+              </View>
+            </View>
+            {/* <SpacingY height={17} /> */}
+
+            <SpacingY height={12} />
             <CustomInput
               value={quantity}
-              numeric={true}
               onChangeText={txt => {
                 setQantity(txt);
               }}
               title="Waste Quantity"
               placeholder="Enter your waste quantities"
             />
-            <SpacingY height={40} />
+            <SpacingY height={15} />
             <CustomDatePicker
-              title="Schedule Date"
+              title="Drop Off Date"
               value={ScheduleDate}
               onChangeDate={(text: string) => setScheduleDate(text)}
               placeholder="Enter your preffered schedule date"
             />
-            <SpacingY height={40} />
-            {loading ? (
-              <View style={{marginBottom: 8}}>
-                <ActivityIndicator style={{alignSelf: 'center'}} size={20} />
-                <Text
-                  style={{
-                    marginTop: 3,
-                    fontFamily: 'Roboto',
-                    textAlign: 'center',
-                  }}>
-                  Getting location..
-                </Text>
-              </View>
-            ) : (
-              <CustomLocation
-                value={location}
-                disabled={!toggleCheckBox}
-                onChangeText={(text: string) => setLocation(text)}
-                title="Pickup Location"
-                placeholder="Enter your pickup location"
-              />
-            )}
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <CheckBox
-                disabled={loading}
-                value={toggleCheckBox}
-                onValueChange={newValue => setToggleCheckBox(newValue)}
-              />
-              <Text style={styles.text}>Use my current address</Text>
-            </View>
-            <SpacingY height={57} />
+            <SpacingY height={12} />
+
+            <CustomDatePicker
+              title="Drop off Time"
+              userMode="time"
+              value={'2:00pm'}
+              onChangeDate={(text: string) => setScheduleTime(text)}
+              placeholder="Enter your preffered schedule time"
+            />
+
+            <SpacingY height={34} />
             <View>
-              <Text
-                style={[
-                  styles.text,
-                  {fontStyle: 'italic', textAlign: 'center'},
-                ]}>
-                We’ve added a 10% fee to your waste schedules for {'\n'}your
-                convenience.
-              </Text>
-              <SpacingY height={16} />
               <CustomBtn
                 onPress={() => setModalopen(true)}
                 disabled={
-                  !location ||
+                
                   selected?.length < 1 ||
                   !ScheduleDate ||
                   !quantity
@@ -226,6 +239,13 @@ const styles = ScaledSheet.create({
 
     backgroundColor: colors.primary[100],
   },
+  subtitle: {
+    fontWeight: '500',
+    fontFamily: 'Roboto',
+    color: colors.neutral[50],
+    fontSize: '13@s',
+    fontStyle: 'normal',
+  },
   wrapper: {
     paddingHorizontal: '23@msr',
     flex: 1,
@@ -233,15 +253,15 @@ const styles = ScaledSheet.create({
   text: {
     fontWeight: '500',
     fontFamily: 'Raleway',
-    color: colors.neutral[150],
-    fontSize: '12@s',
+    color: colors.neutral[50],
+    fontSize: '14@s',
   },
   spacingX: {
     height: '10@vs',
   },
   spacingTop: {
-    height: '40@vs',
+    height: '18@vs',
   },
 });
 
-export default ScheduleForm1;
+export default DropOffForm;

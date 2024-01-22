@@ -7,7 +7,9 @@ export interface wasteTypes {
   category: string;
   types: Array<categoryTypes>;
 }
-
+export const API_KEY = '65abe9cad95c9083141329gza1fb474';
+export const geocode_url = (long: number, lat: number) =>
+  `https://geocode.maps.co/reverse?lat=${lat}&lon=${long}&api_key=${API_KEY}`;
 export const wasteCategory: Array<wasteTypes> = [
   {
     category: 'Pet Bottles',
@@ -73,5 +75,3 @@ export const wasteCategory: Array<wasteTypes> = [
     ],
   },
 ];
-
-

@@ -11,6 +11,7 @@ interface props {
   title: string;
   value: string;
   onChangeDate: (txt: string) => void;
+  userMode?: AndroidMode | IOSMode;
 }
 type AndroidMode = 'date' | 'time';
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
@@ -20,6 +21,7 @@ const CustomDatePicker: React.FC<props> = ({
   title,
   value,
   onChangeDate,
+  userMode,
 }) => {
   const [date, setDate] = useState(new Date(Date.now()));
   const [mode, setMode] = useState<AndroidMode | IOSMode>('date');
@@ -54,7 +56,7 @@ const CustomDatePicker: React.FC<props> = ({
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
-          mode={mode}
+          mode={userMode || mode}
           // is24Hour={true}
           onChange={onChange}
         />
