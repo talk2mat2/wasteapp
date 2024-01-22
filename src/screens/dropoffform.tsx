@@ -87,7 +87,7 @@ const DropOffForm: React.FC<props> = ({navigation}) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={true}
+        visible={modalOpen}
         onRequestClose={() => {
           setModalopen(!modalOpen);
         }}>
