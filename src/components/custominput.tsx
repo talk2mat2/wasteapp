@@ -9,24 +9,27 @@ interface props {
   placeholder?: string;
   title: string;
   onChangeText: (txt: string) => void;
-  value:string
+  value: string;
+  numeric?: boolean;
 }
 
 const CustomInput: React.FC<props> = ({
   placeholder = '',
   title,
   onChangeText,
-  value
+  value,
+  numeric,
 }) => {
   function onChanged(text: string) {
-    onChangeText(text.replace(/[^0-9]/g, ''));
+    numeric ? onChangeText(text.replace(/[^0-9]/g, '')) : onChangeText(text);
   }
   return (
     <View style={styles.container}>
       <View style={{flex: 1}}>
         <Text style={styles.title}>{title}</Text>
       </View>
-      <TextInput value={value}
+      <TextInput
+        value={value}
         onChangeText={onChanged}
         placeholderTextColor={colors.neutral[150]}
         style={[styles.input, styles.subtitle]}

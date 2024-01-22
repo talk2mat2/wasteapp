@@ -11,6 +11,7 @@ import {NavigationProp, ParamListBase} from '@react-navigation/native';
 interface propsType {
   hideModal(): void;
   navigation: NavigationProp<ParamListBase>;
+  isDrop?: boolean;
 }
 const Successfull = () => {
   return (
@@ -85,7 +86,7 @@ const LoadingData = () => {
   );
 };
 
-const Submiting = ({hideModal, navigation}: propsType) => {
+const Submiting = ({hideModal, navigation, isDrop}: propsType) => {
   const [mounted, setMounted] = React.useState(1);
 
   const fakeApicall = () => {
@@ -94,7 +95,9 @@ const Submiting = ({hideModal, navigation}: propsType) => {
     }, 8000);
     setTimeout(hideModal, 13000);
     setTimeout(() => {
-      navigation.navigate('scheduleDetails');
+      isDrop
+        ? navigation.navigate('scheduleStart')
+        : navigation.navigate('scheduleDetails');
     }, 16000);
   };
 

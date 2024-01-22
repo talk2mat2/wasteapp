@@ -13,7 +13,7 @@ import {NavigationProp, ParamListBase} from '@react-navigation/native';
 interface props {
   navigation?: NavigationProp<ParamListBase>;
 }
-const DropItem: React.FC<props> = ({navigation}) => {
+const DropItemBox: React.FC<props> = ({navigation}) => {
   return (
     <Pressable
       onPress={() => navigation?.navigate('dropOffForm')}
@@ -23,7 +23,7 @@ const DropItem: React.FC<props> = ({navigation}) => {
           <View>
             <Text
               style={{
-                fontSize: scale(12),
+                fontSize: scale(14),
                 fontWeight: '600',
                 fontFamily: 'Raleway',
               }}>
@@ -63,22 +63,21 @@ const DropItem: React.FC<props> = ({navigation}) => {
             </View>
           </View>
         </View>
-        <AntDesign name="right" color={colors.brand[150]} size={20} />
+       
       </View>
     </Pressable>
   );
 };
 
-export default DropItem;
+export default  DropItemBox;
 
 const styles = ScaledSheet.create({
   container: {
     height: '109@vs',
-    elevation: 1,
     paddingTop: '7@s',
     borderRadius: '13@s',
     paddingHorizontal: '18@s',
-    backgroundColor: colors.brand[50],
+    backgroundColor: colors.primary[100],
     paddingBottom: '14@s',
     flexDirection: 'row',
     justifyContent: 'space-between',
