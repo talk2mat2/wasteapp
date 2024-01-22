@@ -218,7 +218,7 @@ const DropOffForm: React.FC<props> = ({navigation}) => {
               <CustomBtn
                 onPress={() => setModalopen(true)}
                 disabled={
-                  !location ||
+                
                   selected?.length < 1 ||
                   !ScheduleDate ||
                   !quantity
